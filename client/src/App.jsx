@@ -1,33 +1,33 @@
-// client/src/App.jsx
 import { useState, useEffect } from 'react'
 
-function App() {
-  const [status, setStatus] = useState("Loading backend status...");
+const BACKEND_URL = "https://wyo.onrender.com"; 
 
-  // We will uncomment this once we have the URL
-  /* useEffect(() => {
-    fetch('YOUR_BACKEND_URL')
+function App() {
+  const [status, setStatus] = useState("Connecting to backend...");
+
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/`)
       .then(res => res.json())
-      .then(data => setStatus(data.message))
-      .catch(err => setStatus("Backend not connected yet"))
-  }, []) 
-  */
+      .then(data => {
+        console.log("Data received:", data);
+        setStatus(data.message);
+      })
+      .catch(err => {
+        console.error("Connection failed:", err);
+        setStatus("Error: Could not connect to backend.");
+      })
+  }, [])
 
   return (
-    <div style={{ 
-      backgroundColor: '#1a1a2e', 
-      color: '#00f3ff', 
-      height: '100vh', 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center',
-      flexDirection: 'column',
-      fontFamily: 'sans-serif'
-    }}>
-      <h1 style={{ fontSize: '3rem', margin: 0 }}>WYO</h1>
-      <p style={{ color: '#fff' }}>Matchmaking Engine v0.1</p>
-      <div style={{ marginTop: '20px', padding: '10px', border: '1px solid #00f3ff' }}>
-        Backend Status: {status}
+    <div className="min-h-screen bg-gray-900 text-cyan-400 flex flex-col items-center justify-center font-mono">
+      <h1 className="text-6xl font-bold mb-2 tracking-tighter">WYO</h1>
+      <p className="text-white text-lg mb-8 opacity-80">Matchmaking Engine v0.1</p>
+      
+      <div className="p-6 border-2 border-cyan-400 rounded-lg shadow-[0_0_15px_rgba(0,243,255,0.3)] bg-gray-800">
+        <div className="flex items-center gap-3">
+          <div className={`w-3 h-3 rounded-full ${status.includes("ONLINE") ? "bg-green-500 animate-pulse" : "bg-red-500"}`}></div>
+          <span className="text-xl">{status}</span>
+        </div>
       </div>
     </div>
   )
