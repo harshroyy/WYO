@@ -30,7 +30,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+  store: (MongoStore.create || MongoStore.default?.create || MongoStore.MongoStore?.create)({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     secure: false, // Set to true if using HTTPS only
@@ -46,7 +46,7 @@ app.use(passport.session());
 app.get('/auth/discord', passport.authenticate('discord'));
 
 // 2. Callback Route
-app.get('/auth/discord/callback', 
+app.get('/auth/discord/callback',
   passport.authenticate('discord', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect to frontend dashboard
