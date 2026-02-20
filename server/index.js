@@ -20,7 +20,7 @@ require('./config/passport')(passport);
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // Allow Vercel frontend
+  origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : '*', // Allow Vercel frontend (strip trailing slash if present)
   credentials: true // Allow cookies/sessions
 }));
 app.use(express.json());
