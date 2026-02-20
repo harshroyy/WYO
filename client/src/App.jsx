@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const BACKEND_URL = "https://wyo-api.onrender.com";
+const BACKEND_URL = "https://wyo.onrender.com";
 
 function App() {
   const [status, setStatus] = useState("Connecting to backend...");
