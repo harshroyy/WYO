@@ -42,6 +42,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+// Health Check Route
+app.get('/', (req, res) => {
+  res.json({ status: 'success', message: 'WYO API is running smoothly.' });
+});
+
 // 1. Login Route
 app.get('/auth/discord', passport.authenticate('discord'));
 
